@@ -3,14 +3,17 @@
   position: relative;
   padding-top: 100px;
 }
-.middle_container {
+.middle_container{
   background-color: #f0e3ff;
+  padding: 20px;
 }
 
-.bottom_container {
+.bottom_container{
   background-color: #d89cf6;
 }
-
+.mountain{
+  vertical-align: middle;
+}
 a{
   color: #916dd5;
 }
@@ -41,6 +44,8 @@ h2 {
   font-family: 'Montserrat', sans-serif;
   color: #3e206d;
   font-size: 2.5rem;
+  margin-top: 0;
+  font-weight: normal;
 }
 
 h3 {
