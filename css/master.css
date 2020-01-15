@@ -1,11 +1,11 @@
 .top_container {
   background-color: #d89cf6;
   position: relative;
-  padding-top: 100px;
+  padding-top: 6.25rem;
 }
 .middle_container{
   background-color: #f0e3ff;
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 .bottom_container{
@@ -18,24 +18,25 @@ a{
   color: #916dd5;
 }
 .joker{
-  width: 180px;
-  height: 180px;
+  width: 11.25rem;
+  height: 11.25rem;
   border-radius: 50%;
 }
 .skill-img{
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
 }
 
 body {
   margin: 0;
   text-align: center;
   font-family: 'Merriweather', serif;
+  font-size: 1rem;
 }
 
 h1 {
   font-size: 5.625rem;
-  margin: 50px auto 0 auto;
+  margin: 3.125rem auto 0 auto;
   color: #3e206d;
   font-family: 'Sacramento', cursive;
 }
@@ -55,12 +56,12 @@ h3 {
 
 .top_cloud {
   position: absolute;
-  right: 200px;
-  top: 50px;
+  right: 12.5rem;
+  top: 3.125rem;
 }
 
 .bottom_cloud {
   position: absolute;
-  bottom: 300px;
-  left: 200px;
+  bottom: 18.75rem;
+  left: 12.5rem;
 }
