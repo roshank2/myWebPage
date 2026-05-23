@@ -1,60 +1,337 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  BarChart, 
+  Database, 
+  Cpu, 
+  TrendingUp, 
+  ArrowRight, 
+  Mail, 
+  Phone, 
+  Github, 
+  Linkedin, 
+  ExternalLink,
+  Code,
+  ChevronLeft,
+  ChevronRight
+} from 'lucide-react';
 
-<head>
-  <meta charset="utf-8">
-  <title>Roshan Kumar</title>
-  <link rel="stylesheet" href="css/master.css">
-  <link rel="icon" href="images/iconRJ.png">
-  <link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat|Sacramento&display=swap" rel="stylesheet">
-</head>
+// Reusable Components to keep the main App clean
+const NavLink = ({ href, children }) => (
+  <a href={href} className="hover:text-zinc-50 transition-colors">{children}</a>
+);
 
-<body>
-  <div class="top_container">
-    <img class="top_cloud" src="images/cloud.png" alt="cloud"><br />
-    <h1>I'm Roshan.</h1>
-    <h2>Data & Business Analyst</h2><br />
-    <img class="bottom_cloud" src="images/cloud.png" alt="cloud">
-    <img class="mountain" src="images/mountain.png" alt="mountain">
-  </div>
-  
-  <div class="middle_container">
-    <div class="profile">
-      <img class="joker" src="images/111.jpg" alt="Profile Picture">
-      <h2>Hello.</h2>
-      <p>I am a Data Quality Engineer with over 5 years of experience across integrated logistics, IT, and healthcare domains. I specialize in KPI optimization, data quality, and business intelligence. Driven by data, I build actionable dashboards and leverage tools like Power BI, SQL, and Advanced Excel to enable smarter business decisions.</p>
+const SocialLink = ({ href, Icon }) => (
+  <a href={href} className="h-10 w-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-fuchsia-400 hover:border-fuchsia-500/30 transition-all">
+    <Icon size={18} />
+  </a>
+);
+
+const App = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const carouselRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true }); // passive flag for better scroll perf
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollCarousel = (direction) => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: direction === 'left' ? -350 : 350, behavior: 'smooth' });
+    }
+  };
+
+  // Data Arrays moved out of render to prevent recreation on re-renders
+  const metrics = [
+    { value: '60-70%', label: 'reduced manual efforts', icon: <TrendingUp size={20} className="text-fuchsia-400" /> },
+    { value: '1%', label: 'reducing rate match discrepancies (10% to 1%)', icon: <BarChart size={20} className="text-pink-400" /> },
+    { value: '94%', label: 'increasing plan cost accuracy (70% to 94%)', icon: <Database size={20} className="text-rose-400" /> },
+    { value: '400+', label: 'Supply Chain Lanes Onboarded', icon: <ExternalLink size={20} className="text-fuchsia-500" /> },
+  ];
+
+  const skillGroups = [
+    { category: "Analytics & BI Tools", skills: "Power BI (Microsoft Certified), Power Query, DAX, SQL, Python, Advanced Excel, Tableau, Generative Al Tools (ChatGPT, Gemini, Claude)" },
+    { category: "Data & Analysis", skills: "Data Analysis, Data Cleaning & Validation, Data Visualization, KPI Analysis, Dashboard Development, Data Quality Management" },
+    { category: "Business & Operations", skills: "Process Improvement & Documentation, Stakeholder Management, Reporting & Insights, Operational Analytics, Supply Chain Analytics, Root Cause Analysis (RCA), CAPA Support" },
+    { category: "Business Applications & Domain", skills: "ServiceNow, Jira (Jira Service Management), OTM, GPM | Supply Chain & Logistics, IT Service Management, Pharma & Healthcare" },
+  ];
+
+  const certificates = [
+    {
+      title: "Microsoft Certified: Power BI Data Analyst Associate",
+      skills: "Power BI Desktop, Power BI Service, Power Query, DAX, Data Modelling",
+      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600&h=300",
+      link: "#"
+    },
+    {
+      title: "IBM Data Analyst Professional Certificate",
+      skills: "Advanced Excel, SQL, Databases, Python",
+      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600&h=300",
+      link: "#"
+    },
+    {
+      title: "Google Data Analytics Professional Certificate",
+      skills: "SQL, Data Analysis, Data Visualization, Tableau",
+      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600&h=300",
+      link: "#"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-fuchsia-500/30 overflow-x-hidden">
+      
+      {/* Navigation */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800 py-3' : 'bg-transparent py-4'}`}>
+        <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
+          
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full border border-zinc-800 overflow-hidden shadow-lg shadow-fuchsia-500/10">
+              <img src="https://ui-avatars.com/api/?name=Roshan+Kumar&background=18181b&color=d946ef&size=128&font-size=0.33" alt="Roshan Kumar" className="w-full h-full object-cover" />
+            </div>
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="font-bold text-base tracking-tight text-zinc-100">Roshan Kumar</span>
+              <span className="text-zinc-700 text-xs">•</span>
+              <span className="text-xs text-zinc-400 font-medium mt-0.5">Delhi (India)</span>
+            </div>
+          </div>
+
+          <div className="flex gap-4 md:gap-8 text-xs sm:text-sm font-medium text-zinc-400">
+            <NavLink href="#impact">Impact</NavLink>
+            <NavLink href="#experience">Experience</NavLink>
+            <NavLink href="#skills">Skills</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
+          </div>
+        </div>
+      </nav>
+
+      <main className="max-w-5xl mx-auto px-6 pt-24 pb-12 space-y-12">
+        
+        {/* Hero Section */}
+        <section className="animate-fade-in-up flex flex-col items-start justify-center pt-4 md:pt-6">
+          <div className="space-y-4 max-w-4xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fuchsia-500/10 text-fuchsia-400 text-xs font-medium border border-fuchsia-500/20">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-fuchsia-500"></span>
+              </span>
+              Available for New Opportunities
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+              Data Analyst | <br className="hidden md:block"/>
+              Business Analyst | <br className="hidden md:block"/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-pink-500">Process Improvement</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-zinc-400 max-w-2xl leading-relaxed">
+              Data Analyst with 5+ years of experience across integrated logistics, IT, and pharma/healthcare domains, specializing in KPI optimization, data quality, and business intelligence.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              <a href="#impact" className="inline-flex items-center justify-center gap-2 bg-zinc-50 text-zinc-950 px-6 py-3 rounded-lg font-medium hover:bg-zinc-200 transition-colors">
+                View Case Studies <ArrowRight size={18} />
+              </a>
+              <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-zinc-900 text-zinc-50 border border-zinc-800 px-6 py-3 rounded-lg font-medium hover:bg-zinc-800 transition-colors">
+                Contact
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Highlight Metrics */}
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 border-y border-zinc-800 py-6">
+          {metrics.map((stat, i) => (
+            <div key={i} className="space-y-2">
+              <div className="flex items-center gap-2">{stat.icon}</div>
+              <div className="text-3xl md:text-4xl font-bold tracking-tight">{stat.value}</div>
+              <div className="text-xs text-zinc-500 font-medium uppercase tracking-wider">{stat.label}</div>
+            </div>
+          ))}
+        </section>
+
+        {/* Proof of Impact (Case Studies) */}
+        <section id="impact" className="space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-3xl font-bold tracking-tight">Proof of Impact</h2>
+            <p className="text-zinc-400">Moving beyond responsibilities to highlight measurable outcomes.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Reusable card structure logic applied inline for simplicity given varying colors */}
+            <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl hover:bg-zinc-900 transition-colors space-y-4">
+              <div className="h-10 w-10 bg-fuchsia-500/10 rounded-xl flex items-center justify-center border border-fuchsia-500/20"><Cpu className="text-fuchsia-400" size={20} /></div>
+              <div>
+                <h3 className="text-lg font-bold mb-1">Automation Workflows</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed">Automated currency exchange and rates comparison workflows using Python and Generative Al tools, which reduced manual efforts by 60-70%.</p>
+              </div>
+            </div>
+
+            <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl hover:bg-zinc-900 transition-colors space-y-4">
+              <div className="h-10 w-10 bg-pink-500/10 rounded-xl flex items-center justify-center border border-pink-500/20"><TrendingUp className="text-pink-400" size={20} /></div>
+              <div>
+                <h3 className="text-lg font-bold mb-1">KPI Accuracy</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed">Reduced rate mismatch cases from 10% to 1% and improved plan cost accuracy from 70% to 94%, enhancing business-critical KPI accuracy, financial visibility, and decision-making.</p>
+              </div>
+            </div>
+
+            <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl hover:bg-zinc-900 transition-colors space-y-4">
+              <div className="h-10 w-10 bg-rose-500/10 rounded-xl flex items-center justify-center border border-rose-500/20"><BarChart className="text-rose-400" size={20} /></div>
+              <div>
+                <h3 className="text-lg font-bold mb-1">Dashboards</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed">Developed and maintained Power BI dashboards to track airfreight rate quality, NCR-Bs, enabling data-driven decision-making for global stakeholders.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Experience Timeline */}
+        <section id="experience" className="space-y-6">
+           <div className="space-y-1">
+            <h2 className="text-3xl font-bold tracking-tight">Professional Timeline</h2>
+            <p className="text-zinc-400">A track record of process improvement and data optimization.</p>
+          </div>
+
+          <div className="space-y-6 border-l border-zinc-800 ml-3 pl-8 relative">
+            <div className="relative">
+              <div className="absolute w-3 h-3 bg-fuchsia-500 rounded-full -left-[38.5px] top-1.5 border-4 border-zinc-950" />
+              <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2 gap-2">
+                <h3 className="text-xl font-bold">Data Quality Engineer (Senior Executive)</h3>
+                <span className="text-zinc-500 font-medium text-sm bg-zinc-900 px-3 py-1 rounded-full w-fit">May 2024 - Present</span>
+              </div>
+              <div className="text-fuchsia-400 font-medium mb-2">Kuehne + Nagel · Gurugram, IN</div>
+              <ul className="text-zinc-400 text-sm leading-relaxed max-w-3xl list-disc pl-4 space-y-1.5 marker:text-zinc-600">
+                <li>Working in Integrated Logistics (IL) - 4PL for a global pharma & healthcare customer; transitioned from contractual to an on-roll Senior Executive role in July 2025 based on performance and business contributions.</li>
+                <li>Managed KPI analysis, SLA adherence, lead time tracking, OTIF Dashboard, RFQ/RFP activities, order flow, and shipment visibility using SQL, Power BI/Tableau, and Advanced Excel.</li>
+                <li>Led cross-functional discussions with operations, procurement, LSPs, and global stakeholders to support reporting, onboarding, and process improvement initiatives.</li>
+                <li>Developed and maintained Power BI dashboards to track airfreight rate quality, NCR-Bs, enabling data-driven decision-making for global stakeholders and improving OTIF data quality from 80% to 97%.</li>
+                <li>Reduced rate mismatch cases from 10% to 1% and improved plan cost accuracy from 70% to 94%, enhancing business-critical KPI accuracy, financial visibility, and decision-making.</li>
+                <li>Led onboarding for 25 affiliates through process walkthroughs, requirement gathering, and SOP creation. Also, contributed to multiple sites onboarding covering 400+ lanes through data validation, UAT, and hypercare support.</li>
+                <li>Automated currency exchange and rates comparison workflows using Python and Generative Al tools, which reduced manual efforts by 60-70%.</li>
+              </ul>
+            </div>
+
+            <div className="relative pt-2">
+              <div className="absolute w-3 h-3 bg-zinc-600 rounded-full -left-[38.5px] top-3.5 border-4 border-zinc-950" />
+              <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2 gap-2">
+                <h3 className="text-xl font-bold text-zinc-300">Junior Associate</h3>
+                <span className="text-zinc-500 font-medium text-sm bg-zinc-900 px-3 py-1 rounded-full w-fit">Nov 2021 - Mar 2024</span>
+              </div>
+              <div className="text-zinc-400 font-medium mb-2">Coforge · Greater Noida, IN</div>
+              <ul className="text-zinc-400 text-sm leading-relaxed max-w-3xl list-disc pl-4 space-y-1.5 marker:text-zinc-600">
+                <li>Analyzed and maintained call and ticket data for the global Service Desk team, ensuring data accuracy and consistency across reports.</li>
+                <li>Built and optimized reports using Advanced Excel (XLOOKUP, Pivot Tables, data cleaning and transformation functions) to support performance tracking and operational decisions.</li>
+                <li>Monitored and reported on key Service Desk KPIs such as Call-to-Case, ASA, and AHT, providing performance insights to team leads and management to support workflow efficiency improvements.</li>
+              </ul>
+            </div>
+
+            <div className="relative pt-2">
+              <div className="absolute w-3 h-3 bg-zinc-600 rounded-full -left-[38.5px] top-3.5 border-4 border-zinc-950" />
+              <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2 gap-2">
+                <h3 className="text-xl font-bold text-zinc-300">Trade Apprentice (Data Entry Operator)</h3>
+                <span className="text-zinc-500 font-medium text-sm bg-zinc-900 px-3 py-1 rounded-full w-fit">Nov 2020 - Nov 2021</span>
+              </div>
+              <div className="text-zinc-400 font-medium mb-2">Indian Oil Corporation Limited · Delhi, IN</div>
+              <ul className="text-zinc-400 text-sm leading-relaxed max-w-3xl list-disc pl-4 space-y-1.5 marker:text-zinc-600">
+                <li>Supported employee confirmation and superannuation processes across the Northern Region, ensuring accurate record management.</li>
+                <li>Performed data cleaning and analysis on apprenticeship and COVID-19 datasets for the Northern Region, supporting reporting and management visibility.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Technical Arsenal & Certifications */}
+        <section id="skills" className="space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-3xl font-bold tracking-tight">The Technical Arsenal</h2>
+            <p className="text-zinc-400">Tools and methodologies used to drive results.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {skillGroups.map((group, i) => (
+              <div key={i} className="flex flex-col justify-center p-5 rounded-xl border border-zinc-800 bg-zinc-900/30 gap-2">
+                <div className="font-medium text-zinc-200">{group.category}</div>
+                <div className="text-zinc-400 text-sm leading-relaxed">{group.skills}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Certifications Carousel */}
+          <div className="pt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl font-bold text-zinc-200">Certifications</h3>
+              <div className="flex gap-2">
+                <button aria-label="Scroll left" onClick={() => scrollCarousel('left')} className="p-2 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-fuchsia-400 hover:border-fuchsia-500/30 transition-all">
+                  <ChevronLeft size={20} />
+                </button>
+                <button aria-label="Scroll right" onClick={() => scrollCarousel('right')} className="p-2 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-fuchsia-400 hover:border-fuchsia-500/30 transition-all">
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable Container */}
+            <div 
+              ref={carouselRef}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {/* Hide scrollbar pseudo-element logic injected here */}
+              <style dangerouslySetInnerHTML={{__html: `::-webkit-scrollbar { display: none; }`}} />
+
+              {certificates.map((cert, i) => (
+                <a href={cert.link} target="_blank" rel="noopener noreferrer" key={i} className="min-w-[280px] md:min-w-[340px] snap-center bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden hover:border-fuchsia-500/50 transition-colors group block cursor-pointer flex-shrink-0">
+                  <div className="h-32 bg-zinc-800 overflow-hidden relative">
+                    <img src={cert.img} alt={cert.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70 group-hover:opacity-100" loading="lazy" />
+                    <div className="absolute top-3 right-3 bg-zinc-950/80 backdrop-blur text-fuchsia-400 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ExternalLink size={16} />
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-2">
+                    <h4 className="font-bold text-zinc-100 group-hover:text-fuchsia-400 transition-colors leading-tight text-sm">{cert.title}</h4>
+                    <p className="text-xs text-zinc-400 line-clamp-2">{cert.skills}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      {/* Footer / Contact */}
+      <footer id="contact" className="border-t border-zinc-800 bg-zinc-950 pt-8 pb-6">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          
+          <div className="space-y-1">
+            <h2 className="font-bold text-2xl tracking-tighter">Let's Connect</h2>
+            <p className="text-zinc-400 text-sm">Open to new opportunities.</p>
+          </div>
+
+          <div className="flex flex-col gap-3">
+             <a href="mailto:roshan23kmr@gmail.com" className="flex items-center gap-3 text-zinc-300 hover:text-fuchsia-400 transition-colors group">
+               <div className="h-10 w-10 rounded-full bg-zinc-900 border border-zinc-800 group-hover:border-fuchsia-500/30 flex items-center justify-center transition-colors"><Mail size={18} /></div>
+               <span className="font-medium text-sm">roshan23kmr@gmail.com</span>
+             </a>
+             <a href="tel:+918700858307" className="flex items-center gap-3 text-zinc-300 hover:text-fuchsia-400 transition-colors group">
+               <div className="h-10 w-10 rounded-full bg-zinc-900 border border-zinc-800 group-hover:border-fuchsia-500/30 flex items-center justify-center transition-colors"><Phone size={18} /></div>
+               <span className="font-medium text-sm">+91 8700858307</span>
+             </a>
+          </div>
+          
+          <div className="flex gap-4">
+            <SocialLink href="#" Icon={Linkedin} />
+            <SocialLink href="#" Icon={Github} />
+            <SocialLink href="#" Icon={Code} />
+          </div>
+
+        </div>
+        <div className="max-w-5xl mx-auto px-6 mt-8 text-center text-zinc-600 text-xs">
+          © {new Date().getFullYear()} Roshan Kumar. All rights reserved. 
+        </div>
+      </footer>
     </div>
-    <hr>
-    
-    <div class="skills">
-      <h2>My Skills.</h2>
-      <div class="skill-row">
-        <img class="skill-left-img" src="https://cdn-icons-png.flaticon.com/512/2091/2091665.png" alt="Data Analytics Icon">
-        <h3>Data Analytics & BI</h3>
-        <p>Certified in Power BI, IBM Data Analytics, and Google Data Analytics. I have a proven track record of cleaning complex datasets, building comprehensive KPI dashboards, and significantly improving data accuracy and financial visibility.</p>
-      </div>
-      <div class="skill-row">
-        <img class="skill-right-img" src="https://cdn-icons-png.flaticon.com/512/2040/2040058.png" alt="Automation Icon">
-        <h3>Process Improvement & Automation</h3>
-        <p>Experienced in identifying root causes and streamlining operations. I leverage Python and Generative AI tools to automate workflows, reducing manual efforts and driving cross-functional efficiency.</p>
-      </div>
-    </div>
-    <hr>
-    
-    <div class="contact-me">
-      <h2>Get In Touch</h2>
-      <h3>Let's optimize your data.</h3>
-      <p class="contactMeText">Whether you need help with interactive dashboard development, deep-dive data analysis, or process automation, feel free to reach out.</p>
-      <a class="btn" href="mailto:roshan23kmr@gmail.com">CONTACT ME</a>
-    </div>
-  </div>
+  );
+};
 
-  <div class="bottom_container">
-    <a class="footer-link" href="https://www.linkedin.com/in/">LinkedIn</a>
-    <a class="footer-link" href="https://github.com/roshank2/">GitHub</a>
-    <a class="footer-link" href="#">HackerRank</a>
-    <p class="copyright">© 2026 Roshan Kumar.</p>
-  </div>
-</body>
-
-</html>
+export default App;
